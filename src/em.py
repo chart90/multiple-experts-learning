@@ -3,9 +3,9 @@ from numpy.linalg import norm
 from sklearn.linear_model import LogisticRegression
 
 
-def EMAlgorithm(X, Z, phi, psi, theta=0, gamma=0.5, delta=1e-12, eps=1e-3):
+def EMAlgorithm(X, Z, phi=1, psi=1, theta=0, gamma=0.5, delta=1e-12, eps=1e-3):
     """
-    Function to perform purely unsupervised learning of ground truth labels
+    Function to perform learning of ground truth labels from
     """
     shp = X.shape
     N = shp[0]

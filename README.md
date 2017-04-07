@@ -1,4 +1,9 @@
-# multiple-experts-learning
-Code for learning ground-truth labels from multiple experts in supervised and unsupervised learning scenarios
+# Multiple Experts Learning
+Code for learning ground-truth labels from multiple experts in Bayesian supervised and unsupervised learning scenarios.
+Developed as part of my UCL Master's Thesis.
 
-![Alt text](https://cdn.rawgit.com/chart90/multiple-experts-learning/2cb3baa0/docs/usl.svg)
+The approach broadly follows that outlined in Raykar et al. (2009) and applies to the following scenarios:
+ 1. Learning the ground truth binary classification labels for a dataset given a set of annotations from experts
+ 2. Learning ground truth labels and a classifier for a dataset given expert annotations and a feature set
+
+Usage: TBC

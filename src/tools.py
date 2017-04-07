@@ -1,5 +1,19 @@
 import numpy as np
+import math
 from sklearn.metrics import roc_curve, roc_auc_score
+
+
+def ground_truth_heuristic(X, thresh=0.5):
+    shp = X.shape
+    N = shp[0]
+    M = shp[1]
+
+    if thresh < 1:
+        vals = math.floor(M * thresh)
+    else:
+        vals = thresh
+
+    return np.array([X.sum(axis=1) >= vals], dtype=int)
 
 
 def getAUC_Capped(fpr, tpr, cap=1.0):
