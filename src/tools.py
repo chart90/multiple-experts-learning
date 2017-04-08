@@ -16,7 +16,7 @@ def ground_truth_heuristic(X, thresh=0.5):
     return np.array([X.sum(axis=1) >= vals], dtype=int)
 
 
-def getAUC_Capped(fpr, tpr, cap=1.0):
+def get_auc_capped(fpr, tpr, cap=1.0):
     auc = 0
     for i in range(1, len(fpr)):
         width = min(fpr[i],cap) - fpr[i-1]
@@ -26,14 +26,14 @@ def getAUC_Capped(fpr, tpr, cap=1.0):
     return auc / cap
 
 
-def getKfeatures(clf, k, output='both'):
-    coefs = clf.coef_[0]
-    if output == 'both' or output == 'top':
+def get_k_features(mel, k, output='both'):
+    coefs = mel.clf_.coef_[0]
+    if output != 'bottom':
         topK = np.argpartition(coefs, -k)[-k:]
         topK = topK[np.argsort(coefs[topK])][::-1]
         topK = list(zip(topK, coefs[topK]))
         if output == 'top': return topK
-    if output == 'both' or output == 'bottom':
+    else:
         bottomK = np.argpartition(coefs, k)[0:k]
         bottomK = bottomK[np.argsort(coefs[bottomK])]
         bottomK = list(zip(bottomK, coefs[bottomK]))
@@ -41,20 +41,20 @@ def getKfeatures(clf, k, output='both'):
     return topK, bottomK
 
 
-def misclassification_error(clf, feats, labels):
-    return clf.score(feats, labels)
+def misclassification_error(mel, feats, labels):
+    return mel.clf_.score(feats, labels)
 
 
-def cross_entropy_error(clf, feats, labels):
-    res = clf.predict_log_proba(feats)
+def cross_entropy_error(mel, feats, labels):
+    res = mel.clf_.predict_log_proba(feats)
     loss = 0.0
     for ind in range(0, len(res)):
         loss += res[ind][labels[ind]]
     return loss / len(labels)
 
 
-def get_roc(clf, feats, labels):
-    probs = clf.predict_proba(feats)
+def get_roc(mel, feats, labels):
+    probs = mel.clf_.predict_proba(feats)
     fpr, tpr, _ = roc_curve(labels, probs[:,1], pos_label=1)
     auc = roc_auc_score(labels, probs[:,1])
     return fpr, tpr, auc
